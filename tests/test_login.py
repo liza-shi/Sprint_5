@@ -7,38 +7,39 @@ def assert_login_successful(driver):
     assert (driver.current_url.rstrip("/") == Urls.BASE_URL.rstrip("/"))
     assert wait_visible(driver, Locators.ORDER_BUTTON).is_displayed()
 
+class TestLogin:
+    def test_login_by_login_account_button_on_main_page(self, driver):
+        user = register_unique_user(driver)
+        driver.get(Urls.BASE_URL)
+        click(driver, Locators.LOGIN_ACCOUNT_BUTTON)
+        login_from_open_form(driver, user)
 
-def test_login_by_login_account_button_on_main_page(driver):
-    user = register_unique_user(driver)
-    driver.get(Urls.BASE_URL)
-    click(driver, Locators.LOGIN_ACCOUNT_BUTTON)
-    login_from_open_form(driver, user)
-
-    assert_login_successful(driver)
-
-
-def test_login_by_personal_account_link(driver):
-    user = register_unique_user(driver)
-    driver.get(Urls.BASE_URL)
-    click(driver, Locators.PERSONAL_ACCOUNT_LINK)
-    login_from_open_form(driver, user)
-
-    assert_login_successful(driver)
+        assert_login_successful(driver)
 
 
-def test_login_by_link_in_registration_form(driver):
-    user = register_unique_user(driver)
-    driver.get(Urls.REGISTER_URL)
-    click(driver, Locators.LOGIN_LINK_IN_FORM)
-    login_from_open_form(driver, user)
+    def test_login_by_personal_account_link(self, driver):
+        user = register_unique_user(driver)
+        driver.get(Urls.BASE_URL)
+        click(driver, Locators.PERSONAL_ACCOUNT_LINK)
+        login_from_open_form(driver, user)
 
-    assert_login_successful(driver)
+        assert_login_successful(driver)
 
 
-def test_login_by_link_in_password_recovery_form(driver):
-    user = register_unique_user(driver)
-    driver.get(Urls.FORGOT_PASSWORD_URL)
-    click(driver, Locators.LOGIN_LINK_IN_FORM)
-    login_from_open_form(driver, user)
+    def test_login_by_link_in_registration_form(self, driver):
+        user = register_unique_user(driver)
+        driver.get(Urls.REGISTER_URL)
+        click(driver, Locators.LOGIN_LINK_IN_FORM)
+        login_from_open_form(driver, user)
 
-    assert_login_successful(driver)
+        assert_login_successful(driver)
+
+
+    def test_login_by_link_in_password_recovery_form(self, driver):
+        user = register_unique_user(driver)
+        driver.get(Urls.FORGOT_PASSWORD_URL)
+        click(driver, Locators.LOGIN_LINK_IN_FORM)
+        login_from_open_form(driver, user)
+
+        assert_login_successful(driver)
+
